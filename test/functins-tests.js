@@ -1,30 +1,28 @@
-// Неверные символы
-//'123()'
-//'@()'
-//'!()'
-//'/fretreter1()'
-//'&()'
-
-// хорошие последовательности 
-//'()()'
-//'([])'
-//'(){}[]'
-
-// Ошибочные
-//'{ [ } ]'
-
-// Подковырки
-//'))(('
-//'))]{}[(('
-
-
 const assert = require('assert');
 const indexjs = require('../index');
 
+// Недопустимые символы
+let errsymbol = [ '123()', '@()', '!()','/fretreter1()','&()'];
 
-const foo = 'bar';
-const beverages = { tea: [ 'chai', 'matcha', 'oolong' ] };
+// хорошие последовательности
+let goodexpectation = ['g(g)g(g)', '(g[g]g)', '(){g}[]', '()(){}'];
 
+
+// Ошибочные последовательности
+let errexpectation = ["{ [ } ]",  "([}])"];
+
+// Подковырки
+let gooddifficult = ['))((', '))]{}[(('];
+
+// Не бесконечные послеловательности
+let nummatrix = [
+    ['()}', 0],
+    ['(qq)}', 2],
+    ['()}(qqqqq)', 5],
+    ['(){(){[zzzzzzzz]', 8],
+    ["())()", 0]
+    ["(){(})[ddd]", 3]
+  ];
 
 
 describe("indexjs", function() {
@@ -33,18 +31,14 @@ describe("indexjs", function() {
         assert.equal(123, 123);
     });
 
-    it("Тестируем работу тестов", function() {
-        assert.equal(indexjs.FunctionS(123), 123);
+    it("Недопустимые символы", function() {
+        errsymbol.forEach(function(item, i, arr) {
+            assert.equal(indexjs.FunctionS(item), 'Err');
+          });
+        
 
     });
   
-    it("Тестируем возникsновение ошибок ", function() {
-        assert.equal(indexjs.FunctionS(123), 123);
-        assert.equal(indexjs.FunctionS(1234), 123);
-    });
-
-
-
 
 
   });
