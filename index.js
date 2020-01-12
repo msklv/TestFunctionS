@@ -1,5 +1,20 @@
-function myData() { 
-    return 123; 
+
+  
+
+
+
+function FunctionS(data) { 
+    let re = /ab+c/i;
+    // [\(\{\[].*[\)\}\]]
+
+
+
+    // Проверяем входящую строку - только лаитнские символы и скобки
+    
+    
+    console.log('Data: '); 
+    console.log(data); 
+    return data; 
  } 
 
- console.log(myData()); 
+ //console.log(FunctionS(12453)); 

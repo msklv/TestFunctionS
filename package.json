@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/*.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/msklv/TestFunctionS/issues"
   },
-  "homepage": "https://github.com/msklv/TestFunctionS#readme"
+  "homepage": "https://github.com/msklv/TestFunctionS#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.0.0",
+    "mockery": "^2.1.0"
+  }
 }
