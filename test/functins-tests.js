@@ -59,10 +59,11 @@ describe("indexjs", function() {
     ];
 
     it("Не бесконечные допустимые послеловательности", function() {
-
-
-        gooddifficult.forEach(function(item, i, arr) {
-            assert.equal(indexjs.FunctionS(item), 'Infinite');
+        nummatrix.forEach(function(item, i, arr) {
+            if (Array.isArray(item)) {
+                assert.equal(indexjs.FunctionS(item[0]), item[1]); // Не предусмотрен массив правильных ответов
+                // alert(i + ": " + item + " (массив:" + arr + ")");
+            }
         });
     });
 
