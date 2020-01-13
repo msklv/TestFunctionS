@@ -10,8 +10,8 @@
 function FunctionS(data) {
 
     //Проверка на допустимые символы в строке - только лаитнские символы и скобки
-    let truesimvolregexp = /[^a-z\{\}\(\)\[\]]+/ig;
-    // [\(\{\[].*[\)\}\]
+    let truesimvolregexp = /[^a-z\{\}\(\)\[\]]+/i;
+
     if (truesimvolregexp.test(data)) {
 
         console.log('Err string: ' + data);
@@ -21,6 +21,12 @@ function FunctionS(data) {
 
 
     // Проверка на бесконечную длинну (метод наростания ошибок)
+
+
+
+    // Проверяем скобочную послеловательность и находим самую длинную 
+    // [\(\{\[].*[\)\}\]
+
 
 
 
