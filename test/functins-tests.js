@@ -1,29 +1,6 @@
 const assert = require('assert');
 const indexjs = require('../index');
 
-// Недопустимые символы
-let errsymbol = [ '123()', '@()', '!()','/fretreter1()','&()'];
-
-// хорошие последовательности
-let goodexpectation = ['g(g)g(g)', '(g[g]g)', '(){g}[]', '()(){}'];
-
-
-// Ошибочные последовательности
-let errexpectation = ["{ [ } ]",  "([}])"];
-
-// Подковырки
-let gooddifficult = ['))((', '))]{}[(('];
-
-// Не бесконечные послеловательности
-let nummatrix = [
-    ['()}', 0],
-    ['(qq)}', 2],
-    ['()}(qqqqq)', 5],
-    ['(){(){[zzzzzzzz]', 8],
-    ["())()", 0]
-    ["(){(})[ddd]", 3]
-  ];
-
 
 describe("indexjs", function() {
 
@@ -31,15 +8,63 @@ describe("indexjs", function() {
         assert.equal(123, 123);
     });
 
+    // Недопустимые символы
+    let errsymbol = [ '123()', '@()', '!()','/fretreter1()','&()',"{ [ } ]",];
+
     it("Недопустимые символы", function() {
         errsymbol.forEach(function(item, i, arr) {
             assert.equal(indexjs.FunctionS(item), 'Err');
           });
-        
-
     });
-  
 
+    // Хорошие беcконечные последовательности
+    let goodexpectation = ['g(g)g(g)', '(g[g]g)', '(){g}[]', '()(){}'];
+
+    it("Хорошие беcконечные последовательности", function() {
+      goodexpectation.forEach(function(item, i, arr) {
+          assert.equal(indexjs.FunctionS(item), 'Infinite');
+        });
+    });
+
+    // Ошибочные нулевые последовательности
+      let errexpectation = ["{[}]",  "([}])"];
+
+    it("Ошибочные нулевые последовательности", function() {
+      errexpectation.forEach(function(item, i, arr) {
+          assert.equal(indexjs.FunctionS(item), '');
+        });
+    });
+
+
+    // Подковырки (безконечные)
+    let gooddifficult = ['))((', '))]{}[((', ''];
+
+    it("Подковырки (безконечные)", function() {
+      gooddifficult.forEach(function(item, i, arr) {
+          assert.equal(indexjs.FunctionS(item), 'Infinite');
+        });
+    });
+
+
+    // Не бесконечные допустимые послеловательности
+    let nummatrix = [
+      ['()}', '()'],
+      ['(qq)}', '(qq)'],
+      ['()}(qqqqq)', '(qqqqq)'],
+      ['(){(){[zzzzzzzz]', '[zzzzzzzz]'],
+      ["())()", '()']
+      ["(){(})[ddd]", '[ddd]'],
+      ["uud](){(})[ddu", '[dduuud]']
+      ["(wwwww)}(qqqqq)", ["(wwwww)","(qqqqq)"]]
+    ];
+
+    it("Не бесконечные допустимые послеловательности", function() {
+
+
+      gooddifficult.forEach(function(item, i, arr) {
+          assert.equal(indexjs.FunctionS(item), 'Infinite');
+        });
+    });
 
   });
 

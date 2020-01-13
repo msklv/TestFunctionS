@@ -9,17 +9,25 @@
 
 
 function FunctionS(data) { 
-    let re = /ab+c/i;
-    // [\(\{\[].*[\)\}\]]
+
+    //Проверка на допустимые символы в строке - только лаитнские символы и скобки
+    let truesimvolregexp = /^([a-z]|[\[\]\{\}\(\)]$)/ig;
+    // [\(\{\[].*[\)\}\]
+    if (!(truesimvolregexp.test(data))) {
+
+        console.log('Err string: ' + data); 
+        return 'Err';
+        
+    };
+
+
+    // Проверка на бесконечную длинну (метод наростания ошибок)
 
 
 
-    // Проверяем входящую строку - только лаитнские символы и скобки
-    
-    
-    console.log('Data: '); 
-    console.log(data); 
-    return data; 
+    // Возврат ощибки если не одно условие не применилось
+    console.log('No progress Data: ' + data); 
+        return 'No progress'; 
  } 
 
  module.exports.FunctionS = FunctionS;
