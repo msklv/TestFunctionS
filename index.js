@@ -8,8 +8,10 @@
 
 // Разрешенные символы - только лаитнские символы и скобки
 let truesimvolregexp = /[^a-z\{\}\(\)\[\]]+/i;
-let bracketsSet = new Set('(', ')', '[', ']', '{', '}');
-let bracketsRegExp = /[^\{\}\(\)\[\]]+/i;
+// Проверка скобочной последовательности
+let bracketsRegExp = /[^\{\}\(\)\[\]]+/gi;
+// Сопоставление скобок
+let matchingBrackets = {'(':')', '[':']', '{':'}'};
 
 function FunctionS(data) {
 
@@ -42,10 +44,9 @@ function FunctionS(data) {
 
 
 function correctsequenceofbrackets(data) {
-    data = data.toString();
     console.log('correctsequenceofbrackets Data: ' + data);
     //Убираем личние символы. заменяем их на пустую строку
-    data.replace(bracketsRegExp, '')
+    data = data.replace(bracketsRegExp, '')
     console.log('correctsequenceofbrackets: ' + data);
 
 
@@ -54,29 +55,32 @@ function correctsequenceofbrackets(data) {
     // http://www.cyberforum.ru/python-beginners/thread2211586.html
     // Проверяем послеловательность 
 
-    stack = [];
-    for (i in data) {
-        if (i in ('(', '[', '{')) {
-            stack.append(i)
-        } else if (i == M[stack[-1]]) {
-            stack.pop()
+    let stack = [];
+    for (let i = 0; i < data.length; i++) {
+        var datachar = data.charAt(i);
+       // console.log('i= ' + i + '.  Datachar: ' + datachar);
+        if ( (datachar =='(') || (datachar =='[') || (datachar=='{') ) {
+            stack.push(datachar);
+           // console.log('push ' + datachar);
+        } else if (datachar == matchingBrackets[stack[stack.length-1]]) {
+            stack.pop();
+           // console.log('pop ' + datachar);
         } else {
-            console.log('Неправильная последовательность скобок');
+           // console.log('Неправильная последовательность скобок, i='+i);
             return false;
-        }
-
-
-        if (len(stack) = 0) {
-            console.log('Правильная последовательность скобок');
-            return true;
-
-        } else {
-            console.log('Неправильная последовательность скобок');
-            return false;
-        }
-
+        };
+        
 
     }
+
+    if (stack.length == 0) {
+        //console.log('Правильная последовательность скобок');
+        return true;
+    } else {
+        //console.log('Неправильная последовательность скобок');
+        return false;
+    };
+
 };
 
 
