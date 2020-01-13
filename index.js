@@ -1,4 +1,3 @@
-
 //   Необходимо реализовать функцию, которая принимает в качестве аргумента строку s, 
 // содержащую любые буквы латинского алфавита а так-же скобки вида (){}[], и выдает 
 // в результате наибольшую возможную строку, такую что она является подстрокой бесконечной 
@@ -8,16 +7,16 @@
 
 
 
-function FunctionS(data) { 
+function FunctionS(data) {
 
     //Проверка на допустимые символы в строке - только лаитнские символы и скобки
-    let truesimvolregexp = /^([a-z]|[\[\]\{\}\(\)]$)/ig;
+    let truesimvolregexp = /[^a-z\{\}\(\)\[\]]+/ig;
     // [\(\{\[].*[\)\}\]
-    if (!(truesimvolregexp.test(data))) {
+    if (truesimvolregexp.test(data)) {
 
-        console.log('Err string: ' + data); 
+        console.log('Err string: ' + data);
         return 'Err';
-        
+
     };
 
 
@@ -26,8 +25,8 @@ function FunctionS(data) {
 
 
     // Возврат ощибки если не одно условие не применилось
-    console.log('No progress Data: ' + data); 
-        return 'No progress'; 
- } 
+    console.log('No progress Data: ' + data);
+    return 'No progress';
+}
 
- module.exports.FunctionS = FunctionS;
+module.exports.FunctionS = FunctionS;
