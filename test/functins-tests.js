@@ -48,21 +48,27 @@ describe("indexjs", function() {
 
     // Не бесконечные допустимые послеловательности
     let nummatrix = [
-        ['()}', '()'],
+        ["(wwwww)}(qqqqq)", ["(wwwww)", "(qqqqq)"]],
         ['(qq)}', '(qq)'],
         ['()}(qqqqq)', '(qqqqq)'],
         ['(){(){[zzzzzzzz]', '[zzzzzzzz]'],
         ["())()", '()']
         ["(){(})[ddd]", '[ddd]'],
         ["uud](){(})[ddu", '[dduuud]']
-        ["(wwwww)}(qqqqq)", ["(wwwww)", "(qqqqq)"]]
+        ['()}', '()']
     ];
 
     it("Не бесконечные допустимые послеловательности", function() {
         nummatrix.forEach(function(item, i, arr) {
             if (Array.isArray(item)) {
-                assert.equal(indexjs.FunctionS(item[0]), item[1]); // Не предусмотрен массив правильных ответов
-                // alert(i + ": " + item + " (массив:" + arr + ")");
+                if (Array.isArray(item[1])) {
+                    let answer = item[1];
+                    answer.forEach(function(answeritem, i, arr) {
+                        assert.equal(indexjs.FunctionS(item[0]), answeritem); // Ошибка - проверяется только 1 вариант из массива
+                    });
+                } else {
+                    assert.equal(indexjs.FunctionS(item[0]), item[1]);
+                }
             }
         });
     });
