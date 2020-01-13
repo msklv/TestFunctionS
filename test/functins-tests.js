@@ -17,8 +17,8 @@ describe("indexjs", function() {
         });
     });
 
-    // Хорошие беcконечные последовательности
-    let goodexpectation = ['g(g)g(g)', '(g[g]g)', '(){g}[]', '()(){}'];
+    // Простые и правильные беcконечные последовательности
+    let goodexpectation = ['g(g)g(g)', '(g[g]g)', '(){g}[]', '()(){}', '([{}]())'];
 
     it("Хорошие беcконечные последовательности", function() {
         goodexpectation.forEach(function(item, i, arr) {
@@ -82,5 +82,21 @@ describe("indexjs", function() {
             assert.equal(indexjs.FunctionS(item), '');
         });
     });
+
+
+    // Правильная последовательность скобок
+    it("Правильная последовательность скобок", function() {
+        goodexpectation.forEach(function(item, i, arr) {
+            assert.equal(indexjs.correctsequenceofbrackets(item), true);
+        });
+    });
+
+    // НЕ правильная последовательность скобок
+    it("НЕ правильная последовательность скобок", function() {
+        errexpectation.forEach(function(item, i, arr) {
+            assert.equal(indexjs.correctsequenceofbrackets(item), false);
+        });
+    });
+
 
 });
