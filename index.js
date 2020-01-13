@@ -6,12 +6,22 @@
 // Также необходимо реализовать тесты.
 
 
+
 // Разрешенные символы - только лаитнские символы и скобки
 let truesimvolregexp = /[^a-z\{\}\(\)\[\]]+/i;
 // Проверка скобочной последовательности
 let bracketsRegExp = /[^\{\}\(\)\[\]]+/gi;
 // Сопоставление скобок
-let matchingBrackets = {'(':')', '[':']', '{':'}'};
+let matchingBrackets = {
+    '(': ')',
+    '[': ']',
+    '{': '}'
+};
+
+
+
+
+
 
 function FunctionS(data) {
 
@@ -22,6 +32,12 @@ function FunctionS(data) {
         return 'Err';
 
     };
+
+    // Возврат пустой строки 
+    if ((data == '')||(data==null)) {
+        return '';
+    };
+
 
 
     // Проверка на бесконечную длинну (метод наростания ошибок)
@@ -44,13 +60,8 @@ function FunctionS(data) {
 
 
 function correctsequenceofbrackets(data) {
-    console.log('correctsequenceofbrackets Data: ' + data);
     //Убираем личние символы. заменяем их на пустую строку
     data = data.replace(bracketsRegExp, '')
-    console.log('correctsequenceofbrackets: ' + data);
-
-
-
 
     // http://www.cyberforum.ru/python-beginners/thread2211586.html
     // Проверяем послеловательность 
@@ -58,25 +69,27 @@ function correctsequenceofbrackets(data) {
     let stack = [];
     for (let i = 0; i < data.length; i++) {
         var datachar = data.charAt(i);
-       // console.log('i= ' + i + '.  Datachar: ' + datachar);
-        if ( (datachar =='(') || (datachar =='[') || (datachar=='{') ) {
+        // console.log('i= ' + i + '.  Datachar: ' + datachar);
+        if ((datachar == '(') || (datachar == '[') || (datachar == '{')) {
             stack.push(datachar);
-           // console.log('push ' + datachar);
-        } else if (datachar == matchingBrackets[stack[stack.length-1]]) {
+            // console.log('push ' + datachar);
+        } else if (datachar == matchingBrackets[stack[stack.length - 1]]) {
             stack.pop();
-           // console.log('pop ' + datachar);
+            // console.log('pop ' + datachar);
         } else {
-           // console.log('Неправильная последовательность скобок, i='+i);
+            console.log('Неправильная последовательность скобок, i=' + i + '. Data: ' + data);
             return false;
         };
-        
+
 
     }
 
     if (stack.length == 0) {
         //console.log('Правильная последовательность скобок');
+        console.log('Правильная последовательность скобок: ' + data)
         return true;
     } else {
+        console.log('НЕ правильная последовательность скобок: ' + data)
         //console.log('Неправильная последовательность скобок');
         return false;
     };
