@@ -57,7 +57,9 @@ function FunctionS(data) {
         console.log("Infinite - " + data);
         return "Infinite";
     }
-
+    console.log('');
+    console.log('');
+    console.log('%%%%%%%%%%%%%%%%-MAIN-%%%%%%%%%%%%%%%%%%%%%%');
 
     // Проверяем скобочную послеловательность и находим самую длинную правильную строку
     // 1) Для анализа используем строку длинной в 3s, тк это минимальный повторяющийся стэк
@@ -69,20 +71,45 @@ function FunctionS(data) {
     let maska = ReplaseCorrectBrackets (datarep3);
     let maxMaskCounter = maxMask (maska); 
     console.log('maxMaskCounter: ' + maxMaskCounter);
+    if (maxMaskCounter == 0) {
 
+        console.log('Fin: maska: '  + maska+ '. maxMaskCounter =0. Data: ' + data  )
+        return '';
+    };    
 
+    // составляем regexp для maxMaskCounter
+    let maskaCounterRegExp = new RegExp('\#{' + maxMaskCounter + '}', 'i');
+    //console.log(maskaCounterRegExp);
 
+    // Позиция первого и последнего символа в искомой подстроке
+    let resultarray = maska.match(maskaCounterRegExp);
 
-    // Возврат пустой строки если не одно условие не применилось
-    console.log('No progress Data: ' + data);
-    return '';
+    let resultStartIndex = resultarray.index; 
+    let resultStopIndex = resultarray.index + maxMaskCounter; 
+    console.log('resultStartIndex: ' + resultStartIndex + '. resultStopIndex: ' + resultStopIndex);
+        
+    let result = '';
+    for (let i = resultStartIndex; i<(resultStopIndex); i++) {
+        
+        result = result + datarep3[i];
+
+    };
+    
+    return result;
 }
 
+
+
+
+
+///////////////  functions //////////////////////////////////
+
+// Возвращаем длинну максимальной маски
 function maxMask (data){
     let counter = 0;
     data.replace(/\#+/ig, function (x){
         if (counter < x.length){
-            counter = x.length;  
+            counter = x.length; 
         };
         //console.log('maxMask: ' + counter);
         return;
@@ -90,9 +117,8 @@ function maxMask (data){
     return counter;
 };
 
-
+// Возаращаем "маску" правильнных последовательносей скобок 
 function ReplaseCorrectBrackets(data) {
-
     console.log('Start Mask: ' + data);
     //Заменяем символы на маску 
     data = data.replace(bracketsRegExp, function (x){
@@ -104,13 +130,10 @@ function ReplaseCorrectBrackets(data) {
         return  mask;
     });
     
-
     // Поочередно вырезваем успешные пары скобок пока вырадение не прекратит изменяться 
     let startdata = data;
     do {
         startdata = data;
-        
-
         data = data.replace(BracketsMaskRegExp, function (x){
             let mask = '';
             for (let i = 0; i < x.length; i++ ) {
@@ -128,7 +151,7 @@ function ReplaseCorrectBrackets(data) {
 
 
 
-
+// Функция возвращает количество "скобочных" ошибок в строке 
 function counterUnorrectBrackets(data) {
     // Быстро возвращаем полностью кореектнную строку 
     if (correctSequenceOfBrackets(data)) {
@@ -156,7 +179,7 @@ function counterUnorrectBrackets(data) {
 
 
 
-
+// Проверка на наличие ошибок в строке
 function correctSequenceOfBrackets(data) {
     //Убираем личние символы. заменяем их на пустую строку
     data = data.replace(bracketsRegExp, '')
@@ -175,7 +198,7 @@ function correctSequenceOfBrackets(data) {
             stack.pop();
             // console.log('pop ' + datachar);
         } else {
-            console.log('Неправильная последовательность скобок, i=' + i + '. Data: ' + data);
+           // console.log('Неправильная последовательность скобок, i=' + i + '. Data: ' + data);
             return false;
         };
 
@@ -183,12 +206,10 @@ function correctSequenceOfBrackets(data) {
     }
 
     if (stack.length == 0) {
-        //console.log('Правильная последовательность скобок');
-        console.log('Правильная последовательность скобок: ' + data)
+       // console.log('Правильная последовательность скобок: ' + data)
         return true;
     } else {
-        console.log('НЕ правильная последовательность скобок: ' + data)
-            //console.log('Неправильная последовательность скобок');
+        //console.log('НЕ правильная последовательность скобок: ' + data)
         return false;
     };
 

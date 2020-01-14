@@ -18,7 +18,7 @@ describe("indexjs", function() {
     });
 
     // Простые и правильные беcконечные последовательности
-    let goodexpectation = ['g(g)g(g)', '(g[g]g)', '(){g}[]', '()(){}', '([{}]())'];
+    let goodexpectation = ['g(g)g(g)', '(g[g]g)', '(){g}[]', '()(){}', '([{}]())','gg'];
 
     it("Хорошие беcконечные последовательности", function() {
         goodexpectation.forEach(function(item, i, arr) {
@@ -27,7 +27,7 @@ describe("indexjs", function() {
     });
 
     // Ошибочные нулевые последовательности
-    let errexpectation = ["{[}]", "([}])", "(((((((()))))"];
+    let errexpectation = ["{[}]", "([}])"];
 
     it("Ошибочные нулевые последовательности", function() {
         errexpectation.forEach(function(item, i, arr) {
@@ -48,14 +48,15 @@ describe("indexjs", function() {
 
     // Не бесконечные допустимые послеловательности
     let nummatrix = [
-        ["(wwwww)}(qqqqq)", ["(wwwww)", "(qqqqq)"]],
+        ["(wwwww)}(qqqqq)", '(qqqqq)(wwwww)'],
         ['(qq)}', '(qq)'],
-        ['()}(qqqqq)', '(qqqqq)'],
-        ['(){(){[zzzzzzzz]', '[zzzzzzzz]'],
+        ['()}(qqqqq)', '(qqqqq)()'],
+        ['(){(){[zzzzzzzz]', '[zzzzzzzz]()'],
         ["())()", '()']
         ["(){(})[ddd]", '[ddd]'],
         ["uud](){(})[ddu", '[dduuud]']
-        ['()}', '()']
+        ['()}', '()'],
+        ["(((((((()))))", '((((()))))']
     ];
 
     it("Не бесконечные допустимые послеловательности", function() {
