@@ -27,7 +27,7 @@ describe("indexjs", function() {
     });
 
     // Ошибочные нулевые последовательности
-    let errexpectation = ["{[}]", "([}])"];
+    let errexpectation = ["{[}]", "([}])", "(((((((()))))"];
 
     it("Ошибочные нулевые последовательности", function() {
         errexpectation.forEach(function(item, i, arr) {
@@ -87,14 +87,14 @@ describe("indexjs", function() {
     // Правильная последовательность скобок
     it("Правильная последовательность скобок", function() {
         goodexpectation.forEach(function(item, i, arr) {
-            assert.equal(indexjs.correctsequenceofbrackets(item), true);
+            assert.equal(indexjs.correctSequenceOfBrackets(item), true);
         });
     });
 
     // НЕ правильная последовательность скобок
     it("НЕ правильная последовательность скобок", function() {
         errexpectation.forEach(function(item, i, arr) {
-            assert.equal(indexjs.correctsequenceofbrackets(item), false);
+            assert.equal(indexjs.correctSequenceOfBrackets(item), false);
         });
     });
 

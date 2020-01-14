@@ -34,8 +34,14 @@ function FunctionS(data) {
     };
 
     // Возврат пустой строки 
-    if ((data == '')||(data==null)) {
+    if ((data == '') || (data == null)) {
         return '';
+    };
+
+
+    // Возаращаем явные бесконечные поледовательности
+    if (correctSequenceOfBrackets(data)) {
+        return "Infinite";
     };
 
 
@@ -56,10 +62,28 @@ function FunctionS(data) {
 }
 
 
+function counterUnorrectBrackets(data) {
+    // Быстро возвращаем полностью кореектнную строку 
+    if (correctSequenceOfBrackets(data)) {
+        return 0
+    };
+
+    let counter = 0;
+
+    for (let i = 0; i < data.length; i++) {
+
+    }
+
+
+};
 
 
 
-function correctsequenceofbrackets(data) {
+
+
+
+
+function correctSequenceOfBrackets(data) {
     //Убираем личние символы. заменяем их на пустую строку
     data = data.replace(bracketsRegExp, '')
 
@@ -68,7 +92,7 @@ function correctsequenceofbrackets(data) {
 
     let stack = [];
     for (let i = 0; i < data.length; i++) {
-        var datachar = data.charAt(i);
+        let datachar = data.charAt(i);
         // console.log('i= ' + i + '.  Datachar: ' + datachar);
         if ((datachar == '(') || (datachar == '[') || (datachar == '{')) {
             stack.push(datachar);
@@ -90,7 +114,7 @@ function correctsequenceofbrackets(data) {
         return true;
     } else {
         console.log('НЕ правильная последовательность скобок: ' + data)
-        //console.log('Неправильная последовательность скобок');
+            //console.log('Неправильная последовательность скобок');
         return false;
     };
 
@@ -100,4 +124,4 @@ function correctsequenceofbrackets(data) {
 
 
 module.exports.FunctionS = FunctionS;
-module.exports.correctsequenceofbrackets = correctsequenceofbrackets;
+module.exports.correctSequenceOfBrackets = correctSequenceOfBrackets;
