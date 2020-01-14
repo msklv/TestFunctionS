@@ -19,8 +19,8 @@ let matchingBrackets = {
 };
 // Для исключения правильных связок скобок
 let BracketsCloseRegExp = /(\{\})+|(\(\))+|(\[\])+/gi;
-
-
+// Для исключения правильных связок скобок без учета маски "#"
+let BracketsMaskRegExp = /(\{\#*\})+|(\(\#*\))+|(\[\#*\])+/gi;
 
 
 
@@ -65,7 +65,7 @@ function FunctionS(data) {
     // 3) Находим номера начала и конца самой длинной последовательности "#"
     // 4) Возврашаем найденый массив символов из исходной строки 3s
 
-
+    let maska = ReplaseCorrectBrackets (datarep3);
 
 
 
@@ -75,6 +75,44 @@ function FunctionS(data) {
     console.log('No progress Data: ' + data);
     return '';
 }
+
+
+function ReplaseCorrectBrackets(data) {
+
+    console.log('Start Mask: ' + data);
+    //Заменяем символы на маску 
+    data = data.replace(bracketsRegExp, function (x){
+        let mask = '';
+        for (let i = 0; i < x.length; i++ ) {
+            mask = mask + '#';
+        };
+        //console.log('Mask: ' + mask);
+        return  mask;
+    });
+    
+
+    // Поочередно вырезваем успешные пары скобок пока вырадение не прекратит изменяться 
+    let startdata = data;
+    do {
+        startdata = data;
+        
+
+        data = data.replace(BracketsMaskRegExp, function (x){
+            let mask = '';
+            for (let i = 0; i < x.length; i++ ) {
+                mask = mask + '#';
+            };
+            //console.log('Mask: ' + mask);
+            return  mask;
+        });
+        console.log('Replase: ' + data);
+
+    } while (data != startdata);
+
+    return data;
+};
+
+
 
 
 function counterUnorrectBrackets(data) {
