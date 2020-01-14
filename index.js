@@ -61,7 +61,10 @@ function FunctionS(data) {
 
     // Проверяем скобочную послеловательность и находим самую длинную 
     // [\(\{\[].*[\)\}\]
-    let bracket1RegExp = /[\(\{\[].*[\)\}\]]/g;
+    let bracketStep1RegExp = /[\(\{\[].*[\)\}\]]/gi;
+    console.log('Start: ' + data);
+    let dataarr = data.match(bracketStep1RegExp);
+    console.log(dataarr);
 
 
 
