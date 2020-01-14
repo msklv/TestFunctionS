@@ -17,6 +17,9 @@ let matchingBrackets = {
     '[': ']',
     '{': '}'
 };
+// Для исключения правильных связок скобок
+let BracketsCloseRegExp = /(\{\})+|(\(\))+|(\[\])+/gi;
+
 
 
 
@@ -47,7 +50,13 @@ function FunctionS(data) {
 
 
     // Проверка на бесконечную длинну (метод наростания ошибок)
-
+    // если количесво ощибок равно на 3 и на 8 поторениях = значит поледовательность безконечна 
+    let datarep3 = data + data + data;
+    let datarep8 = data + data + data + data + data + data + data + data;
+    if (counterUnorrectBrackets(datarep3) == counterUnorrectBrackets(datarep8)) {
+        console.log();
+        return "Infinite";
+    }
 
 
     // Проверяем скобочную послеловательность и находим самую длинную 
@@ -68,16 +77,23 @@ function counterUnorrectBrackets(data) {
         return 0
     };
 
-    let counter = 0;
-
-    for (let i = 0; i < data.length; i++) {
-
-    }
+    //Убираем личние символы. заменяем их на пустую строку
+    data = data.replace(bracketsRegExp, '')
 
 
+    // Поочередно вырезваем успешные пары скобок пока вырадение не прекратит изменяться 
+    let startdata = data;
+    do {
+        startdata = data;
+        //console.log('Start replase: ' + startdata);
+
+        data = data.replace(BracketsCloseRegExp, '');
+        // console.log('Replase: ' + data);
+
+    } while (data != startdata);
+    //возвращаем длинну оставшихся символов  = ошибочных скобок 
+    return data.length;
 };
-
-
 
 
 
