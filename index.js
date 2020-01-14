@@ -52,22 +52,25 @@ function FunctionS(data) {
     // Проверка на бесконечную длинну (метод наростания ошибок)
     // если количесво ощибок равно на 3 и на 8 поторениях = значит поледовательность безконечна 
     let datarep3 = data + data + data;
-    let datarep8 = data + data + data + data + data + data + data + data;
+    let datarep8 = datarep3 + datarep3 + data + data;
     if (counterUnorrectBrackets(datarep3) == counterUnorrectBrackets(datarep8)) {
-        console.log();
+        console.log("Infinite - " + data);
         return "Infinite";
     }
 
 
     // Проверяем скобочную послеловательность и находим самую длинную 
     // [\(\{\[].*[\)\}\]
+    let bracket1RegExp = /[\(\{\[].*[\)\}\]]/g;
 
 
 
 
-    // Возврат ощибки если не одно условие не применилось
+
+
+    // Возврат пустой строки если не одно условие не применилось
     console.log('No progress Data: ' + data);
-    return 'No progress';
+    return '';
 }
 
 
