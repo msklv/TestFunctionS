@@ -62,11 +62,13 @@ function FunctionS(data) {
     // Проверяем скобочную послеловательность и находим самую длинную правильную строку
     // 1) Для анализа используем строку длинной в 3s, тк это минимальный повторяющийся стэк
     // 2) Заменяем верные послеловательности на спец символы "#"
-    // 3) Находим номера начала и конца самой длинной последовательности "#"
+    // 3) Находим самую длинную полседовательность
+    // 3.1) Находим номера начала и конца самой длинной последовательности "#"
     // 4) Возврашаем найденый массив символов из исходной строки 3s
 
     let maska = ReplaseCorrectBrackets (datarep3);
-
+    let maxMaskCounter = maxMask (maska); 
+    console.log('maxMaskCounter: ' + maxMaskCounter);
 
 
 
@@ -75,6 +77,18 @@ function FunctionS(data) {
     console.log('No progress Data: ' + data);
     return '';
 }
+
+function maxMask (data){
+    let counter = 0;
+    data.replace(/\#+/ig, function (x){
+        if (counter < x.length){
+            counter = x.length;  
+        };
+        //console.log('maxMask: ' + counter);
+        return;
+    });
+    return counter;
+};
 
 
 function ReplaseCorrectBrackets(data) {
