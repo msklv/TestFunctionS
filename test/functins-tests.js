@@ -17,10 +17,10 @@ describe("indexjs", function() {
         });
     });
 
-    // Простые и правильные беcконечные последовательности
+    // Простые и правильные бесконечные последовательности
     let goodexpectation = ['g(g)g(g)', '(g[g]g)', '(){g}[]', '()(){}', '([{}]())','gg'];
 
-    it("Хорошие беcконечные последовательности", function() {
+    it("Хорошие бесконечные последовательности", function() {
         goodexpectation.forEach(function(item, i, arr) {
             assert.equal(indexjs.FunctionS(item), 'Infinite');
         });
@@ -36,17 +36,17 @@ describe("indexjs", function() {
     });
 
 
-    // Подковырки (безконечные)
+    // Подковырки (бесконечные)
     let gooddifficult = ['))z((', '))]{z}[(('];
 
-    it("Подковырки (безконечные)", function() {
+    it("Подковырки (бесконечные)", function() {
         gooddifficult.forEach(function(item, i, arr) {
             assert.equal(indexjs.FunctionS(item), 'Infinite');
         });
     });
 
 
-    // Не бесконечные допустимые послеловательности
+    // Не бесконечные допустимые последовательности
     let nummatrix = [
         ["(wwwww)}(qqqqq)", '(qqqqq)(wwwww)'],
         ['(qq)}', '(qq)'],
@@ -65,7 +65,7 @@ describe("indexjs", function() {
                 if (Array.isArray(item[1])) {
                     let answer = item[1];
                     answer.forEach(function(answeritem, i, arr) {
-                        assert.equal(indexjs.FunctionS(item[0]), answeritem); // Ошибка - проверяется только 1 вариант из массива
+                        assert.equal(indexjs.FunctionS(item[0]), answeritem);
                     });
                 } else {
                     assert.equal(indexjs.FunctionS(item[0]), item[1]);
