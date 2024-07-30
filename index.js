@@ -6,9 +6,9 @@
 // Также необходимо реализовать тесты.
 
 
-
+// ________________________________ Константы _________________________________________
 // Разрешенные символы - только латинские символы и скобки
-let truesimvolregexp = /[^a-z\{\}\(\)\[\]]+/i;
+let trueSymbolRegExp = /[^a-z\{\}\(\)\[\]]+/i;
 // Проверка скобочной последовательности
 let bracketsRegExp = /[^\{\}\(\)\[\]]+/gi;
 // Сопоставление скобок
@@ -24,12 +24,12 @@ let BracketsMaskRegExp = /(\{\#*\})+|(\(\#*\))+|(\[\#*\])+/gi;
 
 
 
-
+// _______________________________________ Логика _________________________________________
 
 function FunctionS(data) {
 
     //Проверка на допустимые символы в строке 
-    if (truesimvolregexp.test(data)) {
+    if (trueSymbolRegExp.test(data)) {
 
         console.log('Err string: ' + data);
         return 'Err';
@@ -50,48 +50,48 @@ function FunctionS(data) {
 
 
     // Проверка на бесконечную длину (метод нарастания ошибок)
-    // если количесво ощибок равно на 3 и на 8 поторениях = значит поледовательность безконечна 
-    let datarep3 = data + data + data;
-    let datarep8 = datarep3 + datarep3 + data + data;
-    if (counterUnorrectBrackets(datarep3) == counterUnorrectBrackets(datarep8)) {
+    // если количество ошибок равно на 3 и на 8 повторениях = значит последовательность бесконечна 
+    let dataRepeat3 = data + data + data;
+    let dataRepeat8 = dataRepeat3 + dataRepeat3 + data + data;
+    if (counterIncorrectBrackets(dataRepeat3) == counterIncorrectBrackets(dataRepeat8)) {
         console.log("Infinite - " + data);
         return "Infinite";
     }
     console.log('');
     console.log('');
-    console.log('%%%%%%%%%%%%%%%%-MAIN-%%%%%%%%%%%%%%%%%%%%%%');
+    console.log(' ');
 
-    // Проверяем скобочную послеловательность и находим самую длинную правильную строку
-    // 1) Для анализа используем строку длинной в 3s, тк это минимальный повторяющийся стэк
+    // Проверяем скобочную последовательность и находим самую длинную правильную строку
+    // 1) Для анализа используем строку длинной в 3s, тк это минимальный повторяющийся стек
     // 2) Заменяем верные последовательности на спец символы "#"
     // 3) Находим самую длинную последовательность
     // 3.1) Находим номера начала и конца самой длинной последовательности "#"
-    // 4) Возврашаем найденый массив символов из исходной строки 3s
+    // 4) Возвращаем найденный массив символов из исходной строки 3s
 
-    let maska = ReplaseCorrectBrackets (datarep3);
-    let maxMaskCounter = maxMask (maska); 
+    let mask = ReplaceCorrectBrackets (dataRepeat3);
+    let maxMaskCounter = maxMask (mask); 
     console.log('maxMaskCounter: ' + maxMaskCounter);
     if (maxMaskCounter == 0) {
 
-        console.log('Fin: maska: '  + maska+ '. maxMaskCounter =0. Data: ' + data  )
+        console.log('Fin: mask: '  + mask+ '. maxMaskCounter =0. Data: ' + data  )
         return '';
     };    
 
     // составляем regexp для maxMaskCounter
-    let maskaCounterRegExp = new RegExp('\#{' + maxMaskCounter + '}', 'i');
-    //console.log(maskaCounterRegExp);
+    let maskCounterRegExp = new RegExp('\#{' + maxMaskCounter + '}', 'i');
+    //console.log(maskCounterRegExp);
 
     // Позиция первого и последнего символа в искомой подстроке
-    let resultarray = maska.match(maskaCounterRegExp);
+    let resultArray = mask.match(maskCounterRegExp);
 
-    let resultStartIndex = resultarray.index; 
-    let resultStopIndex = resultarray.index + maxMaskCounter; 
+    let resultStartIndex = resultArray.index; 
+    let resultStopIndex = resultArray.index + maxMaskCounter; 
     console.log('resultStartIndex: ' + resultStartIndex + '. resultStopIndex: ' + resultStopIndex);
         
     let result = '';
     for (let i = resultStartIndex; i<(resultStopIndex); i++) {
         
-        result = result + datarep3[i];
+        result = result + dataRepeat3[i];
 
     };
     
@@ -100,12 +100,13 @@ function FunctionS(data) {
 
 
 
-
-
-///////////////  functions //////////////////////////////////
-
-// Возвращаем длину максимальной маски
-function maxMask (data){
+//_______________________________________ Функции _________________________________________
+/**
+ * Возвращает длину максимальной маски в строке.
+ * @param {string} data - входная строка, содержащая буквы латинского алфавита и скобки вида (){}[].
+ * @returns {number} - длина максимальной маски в строке.
+ */
+function maxMask(data) {
     let counter = 0;
     data.replace(/\#+/ig, function (x){
         if (counter < x.length){
@@ -117,8 +118,12 @@ function maxMask (data){
     return counter;
 };
 
-// Возвращаем "маску" правильных последовательностей скобок
-function ReplaseCorrectBrackets(data) {
+/**
+ * Заменяет корректные скобочные последовательности на маску.
+ * @param {string} data - входная строка, содержащая буквы латинского алфавита и скобки вида (){}[].
+ * @returns {string} - строка с замененными корректными скобочными последовательностями на маску.
+ */
+function ReplaceCorrectBrackets(data) {
     console.log('Start Mask: ' + data);
     //Заменяем символы на маску 
     data = data.replace(bracketsRegExp, function (x){
@@ -130,10 +135,10 @@ function ReplaseCorrectBrackets(data) {
         return  mask;
     });
     
-    // Поочередно вырезваем успешные пары скобок пока вырадение не прекратит изменяться 
-    let startdata = data;
+    // Поочередно убираем корректные пары скобок пока выражение не прекратит изменяться 
+    let startData = data;
     do {
-        startdata = data;
+        startData = data;
         data = data.replace(BracketsMaskRegExp, function (x){
             let mask = '';
             for (let i = 0; i < x.length; i++ ) {
@@ -142,36 +147,40 @@ function ReplaseCorrectBrackets(data) {
             //console.log('Mask: ' + mask);
             return  mask;
         });
-        console.log('Replase: ' + data);
+        console.log('Replace: ' + data);
 
-    } while (data != startdata);
+    } while (data != startData);
 
     return data;
 };
 
 
-
-// Функция возвращает количество "скобочных" ошибок в строке 
-function counterUnorrectBrackets(data) {
+/**
+ * Подсчитывает количество "скобочных" ошибок в строке.
+ * @param {string} data - входная строка, содержащая буквы латинского алфавита и скобки вида (){}[].
+ * @returns {number} - количество "скобочных" ошибок в строке.
+ */
+function counterIncorrectBrackets(data) {
     // Быстро возвращаем полностью корректную строку 
     if (correctSequenceOfBrackets(data)) {
         return 0
     };
 
-    //Убираем личние символы. заменяем их на пустую строку
+    //Убираем лишние символы. заменяем их на пустую строку
     data = data.replace(bracketsRegExp, '')
 
 
-    // Поочередно вырезваем успешные пары скобок пока вырадение не прекратит изменяться 
-    let startdata = data;
+    // Поочередно убираем успешные пары скобок пока выражение не прекратит изменяться 
+    let startData = data;
     do {
-        startdata = data;
-        //console.log('Start replase: ' + startdata);
+        startData = data;
+        //console.log('Start replace: ' + startData);
 
         data = data.replace(BracketsCloseRegExp, '');
-        // console.log('Replase: ' + data);
+        // console.log('Replace: ' + data);
 
-    } while (data != startdata);
+    } while (data != startData);
+    
     //возвращаем длину оставшихся символов  = ошибочных скобок 
     return data.length;
 };
@@ -179,29 +188,30 @@ function counterUnorrectBrackets(data) {
 
 
 
-// Проверка на наличие ошибок в строке
+/**
+ * Проверяет правильность скобочной последовательности в строке.
+ * @param {string} data - входная строка, содержащая буквы латинского алфавита и скобки вида (){}[].
+ * @returns {boolean} - true, если скобочная последовательность правильная, false в противном случае.
+ */
 function correctSequenceOfBrackets(data) {
     //Убираем лишние символы. заменяем их на пустую строку
     data = data.replace(bracketsRegExp, '')
 
-    // Проверяем последовательность 
-
+    // Проверяем последовательность символов
     let stack = [];
     for (let i = 0; i < data.length; i++) {
-        let datachar = data.charAt(i);
-        // console.log('i= ' + i + '.  Datachar: ' + datachar);
-        if ((datachar == '(') || (datachar == '[') || (datachar == '{')) {
-            stack.push(datachar);
-            // console.log('push ' + datachar);
-        } else if (datachar == matchingBrackets[stack[stack.length - 1]]) {
+        let dataChar = data.charAt(i);
+        // console.log('i= ' + i + '.  dataChar: ' + dataChar);
+        if ((dataChar == '(') || (dataChar == '[') || (dataChar == '{')) {
+            stack.push(dataChar);
+            // console.log('push ' + dataChar);
+        } else if (dataChar == matchingBrackets[stack[stack.length - 1]]) {
             stack.pop();
-            // console.log('pop ' + datachar);
+            // console.log('pop ' + dataChar);
         } else {
            // console.log('Неправильная последовательность скобок, i=' + i + '. Data: ' + data);
             return false;
         };
-
-
     }
 
     if (stack.length == 0) {
@@ -213,7 +223,6 @@ function correctSequenceOfBrackets(data) {
     };
 
 };
-
 
 
 

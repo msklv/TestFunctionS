@@ -1,11 +1,23 @@
 # TestFunctionS
 
-## Run
-```bach
-npm start
+## Develop
+
+```bash
+yarn
 ```
 
 ## Tests
-```bach
-npm test
+
+```bash
+yarn test
 ```
+
+## Run
+
+```bash
+yarn start
+```
+
+### Репозиторий для тестирования GigaCode
+
+Печально что MarkDown пока не поддерживается
