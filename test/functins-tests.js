@@ -1,37 +1,37 @@
 const assert = require('assert');
-const indexjs = require('../index');
+const indexJs = require('../index');
 
 
-describe("indexjs", function() {
+describe("indexJs", function() {
 
     it("Тест 123", function() {
         assert.equal(123, 123);
     });
 
     // Недопустимые символы
-    let errsymbol = ['123()', '@()', '!()', '/fretreter1()', '&()', "{ [ } ]", ];
+    let errorSymbol = ['123()', '@()', '!()', '/ferreter1()', '&()', "{ [ } ]", ];
 
     it("Недопустимые символы", function() {
-        errsymbol.forEach(function(item, i, arr) {
-            assert.equal(indexjs.FunctionS(item), 'Err');
+        errorSymbol.forEach(function(item, i, arr) {
+            assert.equal(indexJs.FunctionS(item), 'Err');
         });
     });
 
     // Простые и правильные бесконечные последовательности
-    let goodexpectation = ['g(g)g(g)', '(g[g]g)', '(){g}[]', '()(){}', '([{}]())','gg'];
+    let goodExpectation = ['g(g)g(g)', '(g[g]g)', '(){g}[]', '()(){}', '([{}]())','gg'];
 
     it("Хорошие бесконечные последовательности", function() {
-        goodexpectation.forEach(function(item, i, arr) {
-            assert.equal(indexjs.FunctionS(item), 'Infinite');
+        goodExpectation.forEach(function(item, i, arr) {
+            assert.equal(indexJs.FunctionS(item), 'Infinite');
         });
     });
 
     // Ошибочные нулевые последовательности
-    let errexpectation = ["{[}]", "([}])"];
+    let errorExpectation = ["{[}]", "([}])"];
 
     it("Ошибочные нулевые последовательности", function() {
-        errexpectation.forEach(function(item, i, arr) {
-            assert.equal(indexjs.FunctionS(item), '');
+        errorExpectation.forEach(function(item, i, arr) {
+            assert.equal(indexJs.FunctionS(item), '');
         });
     });
 
@@ -41,13 +41,13 @@ describe("indexjs", function() {
 
     it("Подковырки (бесконечные)", function() {
         gooddifficult.forEach(function(item, i, arr) {
-            assert.equal(indexjs.FunctionS(item), 'Infinite');
+            assert.equal(indexJs.FunctionS(item), 'Infinite');
         });
     });
 
 
     // Не бесконечные допустимые последовательности
-    let nummatrix = [
+    let numMatrix = [
         ["(wwwww)}(qqqqq)", '(qqqqq)(wwwww)'],
         ['(qq)}', '(qq)'],
         ['()}(qqqqq)', '(qqqqq)()'],
@@ -59,16 +59,16 @@ describe("indexjs", function() {
         ["(((((((()))))", '((((()))))']
     ];
 
-    it("Не бесконечные допустимые послеловательности", function() {
-        nummatrix.forEach(function(item, i, arr) {
+    it("Не бесконечные допустимые последовательности", function() {
+        numMatrix.forEach(function(item, i, arr) {
             if (Array.isArray(item)) {
                 if (Array.isArray(item[1])) {
                     let answer = item[1];
-                    answer.forEach(function(answeritem, i, arr) {
-                        assert.equal(indexjs.FunctionS(item[0]), answeritem);
+                    answer.forEach(function(answerItem, i, arr) {
+                        assert.equal(indexJs.FunctionS(item[0]), answerItem);
                     });
                 } else {
-                    assert.equal(indexjs.FunctionS(item[0]), item[1]);
+                    assert.equal(indexJs.FunctionS(item[0]), item[1]);
                 }
             }
         });
@@ -77,25 +77,25 @@ describe("indexjs", function() {
 
 
     // Пустая строка и нул
-    let testnull = [null, ''];
+    let testNull = [null, ''];
     it("Пустая строка и нул", function() {
-        testnull.forEach(function(item, i, arr) {
-            assert.equal(indexjs.FunctionS(item), '');
+        testNull.forEach(function(item, i, arr) {
+            assert.equal(indexJs.FunctionS(item), '');
         });
     });
 
 
     // Правильная последовательность скобок
     it("Правильная последовательность скобок", function() {
-        goodexpectation.forEach(function(item, i, arr) {
-            assert.equal(indexjs.correctSequenceOfBrackets(item), true);
+        goodExpectation.forEach(function(item, i, arr) {
+            assert.equal(indexJs.correctSequenceOfBrackets(item), true);
         });
     });
 
     // НЕ правильная последовательность скобок
     it("НЕ правильная последовательность скобок", function() {
-        errexpectation.forEach(function(item, i, arr) {
-            assert.equal(indexjs.correctSequenceOfBrackets(item), false);
+        errorExpectation.forEach(function(item, i, arr) {
+            assert.equal(indexJs.correctSequenceOfBrackets(item), false);
         });
     });
 
